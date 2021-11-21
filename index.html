@@ -1,10 +1,10 @@
 <!--
 	Link: cs4640.cs.virginia.edu/gdd7jh/hw7
 	Sources:
-	- https://www.w3schools.com/
-    - https://api.jquery.com/
-
+        - https://www.w3schools.com/
+        - https://api.jquery.com/
 -->
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -43,16 +43,15 @@
             </div>
         </form>
 
-        <div id="message"></div>
+        <div id="message" style="margin-left:auto; margin-right:auto; text-align:center;"></div>
 
-        <div id="display" style="margin:5%; width:80%;">
-        </div>
+        <table id="display" style="margin-left:auto; margin-right:auto; margin-bottom: 10%;">
+        </table>
 
-        <div id="dummy" style="background-color:blue">
+        <div id="dummy" style="background-color:navy">
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="index.js"></script>
         <script>
 
             var rows = 0;
@@ -76,11 +75,11 @@
                     if($("#" + squares[i]).css("background-color") === $("#dummy").css("background-color")){
                         $("#" + squares[i]).css("background-color", "lightblue");
                     } else {
-                        $("#" + squares[i]).css("background-color", "blue");
+                        $("#" + squares[i]).css("background-color", "navy");
                     }
                 }
                 if(grid.every(grids => grids.every(g => g === 0))){
-                    $("#message").html("<h2>Congratulation! You win!</h2>")
+                    $("#message").html("<h2>Congratulations! You won!</h2>")
                 } else {
                     $("#message").html("")
                 }
@@ -92,9 +91,9 @@
                     var tmp = "";
                     for(let j = 0; j < rows; j++){   
                         if(grid[j][i] === 1){
-                            tmp += "<div class='square' id='" + i + "-" + j + "' style='background-color:lightblue; width:100px; height:100px; margin:5px;'></div>";
+                            tmp += "<div class='square' id='" + i + "-" + j + "' style='background-color:lightblue; width:100px; height:100px; border:white; border-width:5px; border-style:solid;'></div>";
                         }else{
-                            tmp +="<div class='square' id='" + i + "-" + j + "' style='background-color:blue; width:100px; height:100px; margin:5px;'></div>";
+                            tmp +="<div class='square' id='" + i + "-" + j + "' style='background-color:navy; width:100px; height:100px; border:white; border-width:5px; border-style:solid;'></div>";
                         }    
                     }
                     $("#display").append("<td>"+ tmp + "</td>")
