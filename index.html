@@ -2,6 +2,8 @@
 	Link: cs4640.cs.virginia.edu/gdd7jh/hw7
 	Sources:
 	https://www.w3schools.com/
+    https://api.jquery.com/
+
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -41,8 +43,12 @@
             </div>
         </form>
 
-        <div id="display" style="margin:5%; width:80%;">
+        <div id="message"></div>
 
+        <div id="display" style="margin:5%; width:80%;">
+        </div>
+
+        <div id="dummy" style="background-color:blue">
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -53,15 +59,42 @@
             var columns = 0;
             var grid = [];
 
+            function toggleGrid(i, j){
+                grid[j][i] = (grid[j][i] == 0 ? 1 : 0);
+            }
+
+            $(document).on('click', '.square', function (){
+                var id = $(this).attr('id');
+                var squares = [id];
+                id = id.split('-').map(function(item) {return parseInt(item);});
+                toggleGrid(id[0],id[1])
+                if(id[0] + 1 < columns){squares.push((id[0]+1) + "-" + id[1]); toggleGrid(id[0]+1,id[1])}
+                if(id[0] - 1 >= 0){squares.push((id[0]-1) + "-" + id[1]); toggleGrid(id[0]-1,id[1])}
+                if(id[1] + 1 < rows){squares.push(id[0] + "-" + (id[1]+1)); toggleGrid(id[0],id[1]+1)}
+                if(id[1] - 1 >= 0){squares.push(id[0] + "-" + (id[1]-1)); toggleGrid(id[0],id[1]-1)}
+                for(let i = 0; i < squares.length; i++){
+                    if($("#" + squares[i]).css("background-color") === $("#dummy").css("background-color")){
+                        $("#" + squares[i]).css("background-color", "lightblue");
+                    } else {
+                        $("#" + squares[i]).css("background-color", "blue");
+                    }
+                }
+                if(grid.every(grids => grids.every(g => g === 0))){
+                    $("#message").html("<h2>Congratulation! You win!</h2>")
+                } else {
+                    $("#message").html("")
+                }
+            });
+
             function makeBoard(){
                 $("#display").append("<tr>");
                 for(let i = 0; i < columns; i++) {
                     var tmp = "";
                     for(let j = 0; j < rows; j++){   
                         if(grid[j][i] === 1){
-                            tmp += "<div style='background-color:lightblue; width:100px; height:100px; margin:5px;'></div>";
+                            tmp += "<div class='square' id='" + i + "-" + j + "' style='background-color:lightblue; width:100px; height:100px; margin:5px;'></div>";
                         }else{
-                            tmp +="<div style='background-color:blue; width:100px; height:100px; margin:5px;'></div>";
+                            tmp +="<div class='square' id='" + i + "-" + j + "' style='background-color:blue; width:100px; height:100px; margin:5px;'></div>";
                         }    
                     }
                     $("#display").append("<td>"+ tmp + "</td>")
@@ -85,6 +118,7 @@
                             grid[data[i][0]][data[i][1]] = 1;
                         }
                         $("#display").html("");
+                        $("#message").html("");
                         makeBoard();
                     }   
                 });
