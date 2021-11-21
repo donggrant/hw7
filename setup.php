@@ -21,6 +21,4 @@ if($_GET["rows"] * $_GET["columns"] > 4){
 header('Content-type: application/json');
 echo json_encode($grid);
 
-//header('Location: index.html');
-
 ?>
